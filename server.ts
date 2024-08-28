@@ -44,7 +44,7 @@ app.post("/generate-qrcode", uploadLimiter, async (req, res) => {
       fs.writeFileSync(localFilePath, qrCodeBuffer);
 
       const qrCodeUrl = `${FILE_SERVER_URL}/bucket/${fileName}`;
-      return res.json({ data: { qrCodeUrl } });
+      return res.json({ qrCodeUrl });
     } else {
       // Upload the QR code buffer to S3
 
@@ -64,7 +64,7 @@ app.post("/generate-qrcode", uploadLimiter, async (req, res) => {
       // Respond with the URL to access the QR code
       const qrCodeUrl = `${FILE_SERVER_URL}/${response.Metadata?.cid}`;
 
-      return res.json({ data: { qrCodeUrl } });
+      return res.json({ qrCodeUrl });
     }
   } catch (error) {
     console.error("Error generating or uploading QR code:", error);
