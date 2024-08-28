@@ -6,6 +6,7 @@ import * as qrcode from "qrcode";
 import { v4 as uuid } from "uuid";
 import fs from "fs";
 import path from "path";
+import rateLimit from "express-rate-limit";
 
 const app = express();
 
@@ -15,7 +16,13 @@ app.use("/bucket", express.static(path.join(__dirname, "bucket")));
 
 app.get("/", (req, res) => res.send({ environment: NODE_ENV }));
 
-app.post("/generate-qrcode", async (req, res) => {
+const uploadLimiter = rateLimit({
+  windowMs: 1000 * 60 * 15, //15 minutes,
+  limit: 20, //20 requests per 15 minutes
+  message: "Too many requests, please try again later.",
+});
+
+app.post("/generate-qrcode", uploadLimiter, async (req, res) => {
   const { url } = req.body;
 
   if (!url) {
