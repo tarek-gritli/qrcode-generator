@@ -42,3 +42,7 @@ To install the `qrcode-generator`, follow these steps:
 
 To generate a QR code, make a POST request to `/generate-qrcode` with the URL you want to encode. You can use Postman or any other tool to make the request.
 Users are limited to 20 requests per 15 minutes but you can customize that.
+
+## Live Demo
+
+You can test the website [here](https://quick-qr-gen.netlify.app)
